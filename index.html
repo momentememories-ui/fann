@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>มีจดหมายถึงลูกพีช 💌</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0; padding: 0; font-family: 'Kanit', sans-serif;
+            background-color: #E2DFEB; overflow: hidden;
+            display: flex; justify-content: center; align-items: center; height: 100vh;
+        }
+
+        #intro-screen {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; cursor: pointer; z-index: 100;
+            text-align: center; transition: opacity 0.5s ease;
+        }
+
+        .envelope {
+            width: 150px; height: 100px; background-color: #fff;
+            border: 3px solid #333; border-radius: 10px; position: relative;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 3rem; box-shadow: 5px 5px 0px rgba(0,0,0,0.1);
+            animation: bounce 2s infinite;
+        }
+
+        .intro-text { margin-top: 20px; font-size: 1.2rem; color: #333; font-weight: 500; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #main-screen {
+            display: none; position: relative; width: 100%; height: 100%;
+            justify-content: center; align-items: center;
+        }
+
+        .card-container { position: relative; transform: rotate(-5deg); z-index: 10; }
+
+        .card {
+            background-color: #fff; border: 3px solid #333; border-radius: 8px;
+            padding: 30px 40px; width: 280px; text-align: center;
+            box-shadow: 2px 2px 0px #333; position: relative; z-index: 1;
+        }
+
+        .card-header {
+            background-color: #5B7BBE; color: #fff; padding: 5px 15px;
+            border-radius: 5px; display: inline-block; font-size: 1.5rem;
+            margin-bottom: 20px; border: 2px solid #333; transform: rotate(-2deg);
+        }
+
+        .card-text { font-size: 1.3rem; color: #333; line-height: 1.6; margin-bottom: 30px; }
+
+        .checkbox-group { display: flex; justify-content: space-around; margin-top: 20px; }
+
+        .checkbox-label { display: flex; align-items: center; font-size: 1.3rem; cursor: pointer; }
+
+        .checkbox-label input[type="checkbox"] {
+            appearance: none; width: 25px; height: 25px;
+            border: 2px solid #333; border-radius: 5px; margin-right: 10px;
+            cursor: pointer; outline: none;
+        }
+
+        .checkbox-label:nth-child(1) input[type="checkbox"]:checked { background-color: #D97E4A; }
+        .checkbox-label:nth-child(2) input[type="checkbox"]:checked { background-color: #A9C2A0; }
+
+        .thumb {
+            position: absolute; bottom: -30px; right: -20px; width: 100px; height: 120px;
+            background-color: #FFF2E6; border: 3px solid #333;
+            border-radius: 50px 40px 30px 50px; z-index: 2; transform: rotate(-15deg);
+        }
+
+        #floating-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 5;
+        }
+
+        .floating-name {
+            position: absolute; font-size: 1.5rem; color: #FF6B6B;
+            font-weight: 500; white-space: nowrap; opacity: 0;
+            animation: floatUp ease-in forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+        }
+
+        #success-message {
+            display: none; position: absolute; top: 50px; left: 50%;
+            transform: translateX(-50%); background-color: #fff;
+            padding: 20px 30px; border-radius: 15px; border: 3px solid #FF6B6B;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15); z-index: 1000;
+            text-align: center; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            width: 80%; max-width: 300px;
+        }
+
+        #success-message h2 { margin: 0 0 10px 0; color: #FF6B6B; font-size: 1.8rem; }
+        #success-message p { margin: 0; color: #333; font-size: 1.2rem; }
+
+        @keyframes popIn {
+            0% { transform: translateX(-50%) scale(0.5); opacity: 0; }
+            100% { transform: translateX(-50%) scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" src="song.mp3"></audio>
+
+    <div id="intro-screen" onclick="openCard()">
+        <div class="envelope">💌</div>
+        <div class="intro-text">มีจดหมายส่งถึงลูกพีช<br>แตะเพื่อเปิดอ่าน 👆</div>
+    </div>
+
+    <div id="main-screen">
+        <div id="floating-container"></div>
+        
+        <div id="success-message">
+            <h2>เย้! เป็นแฟนกันแล้วนะ 🍑💖</h2>
+            <p>เค้าดีใจที่สุดเลย รักลูกพีชนะ</p>
+        </div>
+        
+        <div class="card-container">
+            <div class="card">
+                <div class="card-header">บัตรขอเป็นแฟน</div>
+                <div class="card-text">
+                    รู้ว่าอาจจะมีงี่เง่าบ้าง<br>
+                    แต่เรามาเป็นแฟนกันนะ...<br>
+                    <strong>ลูกพีช</strong> 🍑
+                </div>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" onchange="handleAccept(this)"> ได้
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" onchange="handleAccept(this)"> ได้
+                    </label>
+                </div>
+            </div>
+            <div class="thumb"></div>
+        </div>
+    </div>
+
+    <script>
+        function openCard() {
+            document.getElementById('intro-screen').style.display = 'none';
+            document.getElementById('main-screen').style.display = 'flex';
+        }
+
+        // ฟังก์ชันเมื่อลูกพีชกด "ได้"
+        function handleAccept(checkbox) {
+            if (checkbox.checked) {
+                // 1. เล่นเพลง
+                const music = document.getElementById('bg-music');
+                music.play().catch(e => console.log("เบราว์เซอร์อาจบล็อกการเล่นเสียงออโต้", e));
+
+                // 2. โชว์ข้อความพิเศษ
+                document.getElementById('success-message').style.display = 'block';
+
+                // 3. เอฟเฟกต์ชื่อลูกพีชลอยขึ้นมา
+                const container = document.getElementById('floating-container');
+                for (let i = 0; i < 40; i++) {
+                    setTimeout(() => {
+                        const floatingElement = document.createElement('div');
+                        floatingElement.classList.add('floating-name');
+                        floatingElement.innerText = 'ลูกพีช 🍑💖';
+                        floatingElement.style.left = Math.random() * 90 + 'vw';
+                        floatingElement.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+                        const duration = Math.random() * 3 + 2;
+                        floatingElement.style.animationDuration = duration + 's';
+                        
+                        container.appendChild(floatingElement);
+                        setTimeout(() => floatingElement.remove(), duration * 1000);
+                    }, i * 150);
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
